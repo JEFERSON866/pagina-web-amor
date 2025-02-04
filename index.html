@@ -72,47 +72,48 @@
         }
         
         function startMessage() {
-            const message = "Hola...\n\n" +
-                            "Disculpa por ser tan discreto al demostrar mis emociones\n\n" +
-                            "soy diferente a los demás, no te doy rosas, chocolates, regalitos, y tampoco atención linda y oportuna\n\n" +
-                            "sí, lo sé, dirás que he hecho muchas cosas para que te alejes de mí\n\n" +
-                            "pero eso no quita el hecho de que hago otras más efímeras, abstractas, como esto que estás viendo ahora mismo.\n\n" +
-                            "Quizás así es mi lenguaje de amor, no lo sé, a veces quiero saber qué significa la palabra AMOR\n\n" +
-                            "soy una persona muy compleja, de emociones e incapaz de entender\n\n" +
-                            "estamos en un momento difícil, no sé cómo acabaremos\n\n" +
-                            "sé que deseas que las cosas se pongan bien, que te den atención, cuidado, cosas bonitas y conmigo no lo tienes.\n\n" +
-                            "Yo, encerrado en mis cosas, pareciera que no me importara pero sí me importa y mucho.\n\n" +
-                            "No quiero lograr nada con esto, solo quiero reafirmar dos palabras...\n\n" +
-                            "<span class='highlight'>TE AMO</span>.\n\n" +
-                            "...\n\n" +
-                            "<span class='highlight'>Disculpa por la broma de mal gusto que te hice anoche.</span>";
+            const message = `Hola...<br><br>
+                            Disculpa por ser tan discreto al demostrar mis emociones<br><br>
+                            Soy diferente a los demás, no te doy rosas, chocolates, regalitos, y tampoco atención linda y oportuna<br><br>
+                            Sí, lo sé, dirás que he hecho muchas cosas para que te alejes de mí<br><br>
+                            Pero eso no quita el hecho de que hago otras más efímeras, abstractas, como esto que estás viendo ahora mismo.<br><br>
+                            Quizás así es mi lenguaje de amor, no lo sé, a veces quiero saber qué significa la palabra AMOR<br><br>
+                            Soy una persona muy compleja, de emociones e incapaz de entender<br><br>
+                            Estamos en un momento difícil, no sé cómo acabaremos<br><br>
+                            Sé que deseas que las cosas se pongan bien, que te den atención, cuidado, cosas bonitas y conmigo no lo tienes.<br><br>
+                            Yo, encerrado en mis cosas, pareciera que no me importara pero sí me importa y mucho.<br><br>
+                            No quiero lograr nada con esto, solo quiero reafirmar dos palabras...<br><br>
+                            <span class='highlight'>TE AMO</span>.<br><br>
+                            ...<br><br>
+                            <span class='highlight'>Disculpa por la broma de mal gusto que te hice anoche.</span>`;
             
             let index = 0;
             let displayMessage = "";
             const messageElement = document.getElementById("message");
             const music = document.getElementById("bgMusic");
-            music.play();
+            
+            music.play().catch(error => console.log("Error al reproducir la música: ", error));
             
             function typeEffect() {
                 if (index < message.length) {
-                    if (message[index] === "<") {
-                        let endTag = message.indexOf(">", index) + 1;
-                        displayMessage += message.substring(index, endTag);
-                        index = endTag;
-                    } else {
-                        displayMessage += message[index];
-                        index++;
-                    }
-                    messageElement.innerHTML = displayMessage.replace(/\n/g, "<br>");
+                    displayMessage += message[index];
+                    index++;
+                    messageElement.innerHTML = displayMessage;
                     setTimeout(typeEffect, 50);
                 } else {
-                    setTimeout(() => {
-                        music.pause();
-                        document.getElementById("messageScreen").classList.add("hidden");
-                        document.getElementById("login").classList.remove("hidden");
-                    }, 5000);
+                    setTimeout(showFinalMessage, 3000);
                 }
             }
+            
+            function showFinalMessage() {
+                messageElement.innerHTML = "<h1><span class='highlight'>Disculpa por la broma de mal gusto que te hice anoche.</span></h1>";
+                setTimeout(() => {
+                    music.pause();
+                    document.getElementById("messageScreen").classList.add("hidden");
+                    document.getElementById("login").classList.remove("hidden");
+                }, 5000);
+            }
+            
             typeEffect();
         }
     </script>
