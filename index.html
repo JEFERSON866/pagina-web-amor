@@ -3,106 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Melissa ❤️</title>
+    <title>Para Melissa</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: black;
-            color: white;
             text-align: center;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
         }
-        #login, #message-container {
+        .login-container {
+            margin-top: 20%;
+        }
+        .hidden {
             display: none;
-            margin-top: 20vh;
         }
-        input {
-            padding: 10px;
-            font-size: 16px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background: red;
-            color: white;
-            border: none;
-            cursor: pointer;
+        .message-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            font-size: 24px;
+            padding: 20px;
+            text-align: center;
+            flex-direction: column;
         }
         .highlight {
             color: red;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
-        }
-        #message {
-            font-size: 20px;
-            white-space: pre-wrap;
-            overflow: hidden;
-            display: inline-block;
-            max-width: 80%;
         }
     </style>
 </head>
 <body>
-    <div id="login">
+    <div id="login" class="login-container">
         <h2>Ingresa nuestra fecha de aniversario</h2>
-        <input type="text" id="date-input" placeholder="DD/MM/AAAA">
+        <input type="date" id="dateInput">
         <button onclick="checkDate()">Ingresar</button>
-        <p id="error-message" style="color: red;"></p>
     </div>
     
-    <div id="message-container">
-        <audio id="music" loop>
-            <source src="te_amo.mp3" type="audio/mp3">
-        </audio>
-        <h1>Hola Melissa...</h1>
+    <div id="messageScreen" class="hidden message-container">
         <p id="message"></p>
     </div>
-
+    
+    <audio id="bgMusic" loop>
+        <source src="te_amo.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+    
     <script>
-        document.getElementById('login').style.display = 'block';
-
         function checkDate() {
-            let input = document.getElementById('date-input').value;
-            if (input === "10/02/2024") {
-                document.getElementById('login').style.display = 'none';
-                document.getElementById('message-container').style.display = 'block';
-                document.getElementById('music').play();
-                typeMessage();
+            const inputDate = document.getElementById("dateInput").value;
+            const correctDate = "2024-02-10";
+            
+            if (inputDate === correctDate) {
+                document.getElementById("login").classList.add("hidden");
+                document.getElementById("messageScreen").classList.remove("hidden");
+                startMessage();
             } else {
-                document.getElementById('error-message').innerText = "Fecha incorrecta. Intenta de nuevo.";
+                alert("Fecha incorrecta. Inténtalo de nuevo.");
             }
         }
-
-        function typeMessage() {
-            let text = "Hola...\n\n" +
-                       "Disculpa por ser tan discreto al demostrar mis emociones\n\n" +
-                       "soy diferente a los demás,no te doy rosas, chocolates, regalitos, y tampoco atención linda y oportuna\n\n" +
-                       "sí, lo sé, dirás que he hecho muchas cosas para que te alejes de mí\n\n" +
-                       "pero eso no quita el hecho de que hago otras más efímeras, abstractas, como esto que estas viendo ahora mismo.\n\n" +
-                       "Quizás así es mi lenguaje de amor, no lo se, a veces quiero saber que significa la palabra AMOR\n\n" +
-                       "soy una persona muy compleja, de emociones e incapaz de entender\n\n" +
-                       "estamos en un momento difícil, no sé cómo acabaremos\n\n" +
-                       "sé que deseas que las cosas se pongan bien, que te den atención, cuidado, cosas bonitas y conmigo no lo tienes.\n\n" +
-                       "Yo, encerrado en mis cosas, pareciera que no me imporatar pero si me importar y mucho.\n\n" +
-                       "No quiero lograr nada con esto, solo quiero reafirmar dos palabras...\n\n" +
-                       "<span class='highlight'>TE AMO</span>.\n\n" +
-                       "...\n\n" +
-                       "<span class='highlight'>Disculpa por la broma de mal gusto que te hice anoche.</span>";
+        
+        function startMessage() {
+            const message = "Hola...\n\n" +
+                            "Disculpa por ser tan discreto al demostrar mis emociones\n\n" +
+                            "soy diferente a los demás, no te doy rosas, chocolates, regalitos, y tampoco atención linda y oportuna\n\n" +
+                            "sí, lo sé, dirás que he hecho muchas cosas para que te alejes de mí\n\n" +
+                            "pero eso no quita el hecho de que hago otras más efímeras, abstractas, como esto que estás viendo ahora mismo.\n\n" +
+                            "Quizás así es mi lenguaje de amor, no lo sé, a veces quiero saber qué significa la palabra AMOR\n\n" +
+                            "soy una persona muy compleja, de emociones e incapaz de entender\n\n" +
+                            "estamos en un momento difícil, no sé cómo acabaremos\n\n" +
+                            "sé que deseas que las cosas se pongan bien, que te den atención, cuidado, cosas bonitas y conmigo no lo tienes.\n\n" +
+                            "Yo, encerrado en mis cosas, pareciera que no me importara pero sí me importa y mucho.\n\n" +
+                            "No quiero lograr nada con esto, solo quiero reafirmar dos palabras...\n\n" +
+                            "<span class='highlight'>TE AMO</span>.\n\n" +
+                            "...\n\n" +
+                            "<span class='highlight'>Disculpa por la broma de mal gusto que te hice anoche.</span>";
             
-            let i = 0;
-            function write() {
-                if (i < text.length) {
-                    document.getElementById('message').innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(write, 50);
+            let index = 0;
+            let displayMessage = "";
+            const messageElement = document.getElementById("message");
+            const music = document.getElementById("bgMusic");
+            music.play();
+            
+            function typeEffect() {
+                if (index < message.length) {
+                    if (message[index] === "<") {
+                        let endTag = message.indexOf(">", index) + 1;
+                        displayMessage += message.substring(index, endTag);
+                        index = endTag;
+                    } else {
+                        displayMessage += message[index];
+                        index++;
+                    }
+                    messageElement.innerHTML = displayMessage.replace(/\n/g, "<br>");
+                    setTimeout(typeEffect, 50);
                 } else {
                     setTimeout(() => {
-                        document.getElementById('music').pause();
-                        document.getElementById('message-container').style.display = 'none';
-                        document.getElementById('login').style.display = 'block';
+                        music.pause();
+                        document.getElementById("messageScreen").classList.add("hidden");
+                        document.getElementById("login").classList.remove("hidden");
                     }, 5000);
                 }
             }
-            write();
+            typeEffect();
         }
     </script>
 </body>
