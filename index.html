@@ -3,129 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Enamorada Melissa</title>
+    <title>Hola Melissa...</title>
     <style>
-        /* Estilos básicos */
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f8f8f8;
-        }
-
-        .container {
-            text-align: center;
-            padding: 50px;
-        }
-
-        #login-form {
-            display: block;
-            margin: 50px auto;
-            padding: 30px;
-            border-radius: 10px;
-            background: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 300px;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        input[type="date"] {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        button {
-            padding: 10px 20px;
-            background-color: #ff4d4d;
+            background-color: black;
             color: white;
-            font-size: 18px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
         }
-
-        .message {
-            font-size: 24px;
-            margin-top: 30px;
-            color: #ff4d4d;
-            animation: fadeIn 3s ease-in-out;
+        #message {
+            font-size: 1.5em;
+            max-width: 80%;
+            white-space: pre-line;
         }
-
-        /* Animación de fade-in */
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
-
-        /* Animación de corazón */
-        @keyframes heartBeat {
-            0% {
-                transform: scale(1);
-            }
-            25% {
-                transform: scale(1.2);
-            }
-            50% {
-                transform: scale(1);
-            }
-        }
-
-        .heart {
-            font-size: 60px;
+        .highlight {
             color: red;
-            animation: heartBeat 1s infinite;
+            font-size: 2em;
+            font-weight: bold;
         }
-
+        #finalMessage {
+            display: none;
+            font-size: 2em;
+            color: yellow;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Login Form -->
-        <div id="login-form">
-            <h2>Bienvenido, Melissa</h2>
-            <p>Ingresa la fecha de nuestro aniversario</p>
-            <input type="date" id="anniversaryDate" />
-            <br><br>
-            <button onclick="checkDate()">Ingresar</button>
-        </div>
-
-        <!-- Mensaje bonito -->
-        <div id="message" class="hidden">
-            <h2 class="message">¡Feliz aniversario, Melissa! 💖</h2>
-            <p class="message">Te amo más de lo que las palabras pueden decir.</p>
-            <p class="message">Gracias por ser mi todo.</p>
-            <div class="heart">❤️</div>
-        </div>
-    </div>
-
-    <audio id="music" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+    <audio id="backgroundMusic" autoplay>
+        <source src="te_amo.mp3" type="audio/mp3">
     </audio>
-
+    <div id="message"></div>
+    <div id="finalMessage">Disculpame por la broma de mal gusto que te hice anoche.</div>
+    
     <script>
-        // Verifica si la fecha es correcta
-        function checkDate() {
-            const inputDate = document.getElementById('anniversaryDate').value;
-            const correctDate = "2024-02-10";  // La fecha de tu aniversario
+        const text = "Hola Melissa...\nDisculpa por ser tan discreto, quizás no demuestro mis emociones.\n\n" +
+            "Soy diferente a los demás, con rosas, chocolates, regalitos y hasta atención linda y oportuna.\n" +
+            "Sí, lo sé, dirás que he hecho muchas cosas para que te alejes de mí.\n\n" +
+            "Eso no quita el hecho, el hecho por el cual hago otras más efímeras, abstractas, como esto por ejemplo.\n" +
+            "Quizás así es mi lenguaje de amor, soy una persona muy compleja, de emociones e incapaz de entender.\n\n" +
+            "Estamos en un momento difícil, no sé cómo acabaremos.\n\n" +
+            "Sé que deseas que las cosas se pongan bien, que te den atención y conmigo no lo tienes.\n\n" +
+            "Yo encerrado en mis cosas, no quiero lograr nada con esto, solo quiero reafirmar dos palabras.\n\n" +
+            "Las cuales los escribo en un código que procesa una computadora y no lo hago como debería ser.\n\n" +
+            "Igual quiero que sepas esas palabras las cuales son ";
 
-            if (inputDate === correctDate) {
-                // Si la fecha es correcta, muestra el mensaje bonito
-                document.getElementById('login-form').classList.add('hidden');
-                document.getElementById('message').classList.remove('hidden');
-                document.getElementById('music').play();  // Reproduce música
+        let index = 0;
+        const messageDiv = document.getElementById("message");
+        const finalMessage = document.getElementById("finalMessage");
+
+        function typeWriter() {
+            if (index < text.length) {
+                messageDiv.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 50);
             } else {
-                alert("La fecha no es correcta. Intenta de nuevo.");
+                setTimeout(() => {
+                    messageDiv.innerHTML += '<span class="highlight">TE AMO</span>';
+                    setTimeout(() => {
+                        finalMessage.style.display = "block";
+                        setTimeout(() => {
+                            window.location.href = "index.html";
+                        }, 3000);
+                    }, 2000);
+                }, 500);
             }
         }
+
+        typeWriter();
     </script>
 </body>
 </html>
