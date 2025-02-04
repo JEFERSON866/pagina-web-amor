@@ -3,78 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hola Melissa...</title>
+    <title>Para Melissa ❤️</title>
     <style>
         body {
+            font-family: Arial, sans-serif;
             background-color: black;
             color: white;
-            font-family: Arial, sans-serif;
             text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
         }
-        #message {
-            font-size: 1.5em;
-            max-width: 80%;
-            white-space: pre-line;
+        #login, #message-container {
+            display: none;
+            margin-top: 20vh;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background: red;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
         .highlight {
             color: red;
-            font-size: 2em;
+            font-size: 24px;
             font-weight: bold;
         }
-        #finalMessage {
-            display: none;
-            font-size: 2em;
-            color: yellow;
+        #message {
+            font-size: 20px;
+            white-space: pre-wrap;
+            overflow: hidden;
+            display: inline-block;
+            max-width: 80%;
         }
     </style>
 </head>
 <body>
-    <audio id="backgroundMusic" autoplay>
-        <source src="te_amo.mp3" type="audio/mp3">
-    </audio>
-    <div id="message"></div>
-    <div id="finalMessage">Disculpame por la broma de mal gusto que te hice anoche.</div>
+    <div id="login">
+        <h2>Ingresa nuestra fecha de aniversario</h2>
+        <input type="text" id="date-input" placeholder="DD/MM/AAAA">
+        <button onclick="checkDate()">Ingresar</button>
+        <p id="error-message" style="color: red;"></p>
+    </div>
     
+    <div id="message-container">
+        <audio id="music" loop>
+            <source src="te_amo.mp3" type="audio/mp3">
+        </audio>
+        <h1>Hola Melissa...</h1>
+        <p id="message"></p>
+    </div>
+
     <script>
-        const text = "Hola Melissa...\nDisculpa por ser tan discreto, quizás no demuestro mis emociones.\n\n" +
-            "Soy diferente a los demás, con rosas, chocolates, regalitos y hasta atención linda y oportuna.\n" +
-            "Sí, lo sé, dirás que he hecho muchas cosas para que te alejes de mí.\n\n" +
-            "Eso no quita el hecho, el hecho por el cual hago otras más efímeras, abstractas, como esto por ejemplo.\n" +
-            "Quizás así es mi lenguaje de amor, soy una persona muy compleja, de emociones e incapaz de entender.\n\n" +
-            "Estamos en un momento difícil, no sé cómo acabaremos.\n\n" +
-            "Sé que deseas que las cosas se pongan bien, que te den atención y conmigo no lo tienes.\n\n" +
-            "Yo encerrado en mis cosas, no quiero lograr nada con esto, solo quiero reafirmar dos palabras.\n\n" +
-            "Las cuales los escribo en un código que procesa una computadora y no lo hago como debería ser.\n\n" +
-            "Igual quiero que sepas esas palabras las cuales son ";
+        document.getElementById('login').style.display = 'block';
 
-        let index = 0;
-        const messageDiv = document.getElementById("message");
-        const finalMessage = document.getElementById("finalMessage");
-
-        function typeWriter() {
-            if (index < text.length) {
-                messageDiv.innerHTML += text.charAt(index);
-                index++;
-                setTimeout(typeWriter, 50);
+        function checkDate() {
+            let input = document.getElementById('date-input').value;
+            if (input === "10/02/2024") {
+                document.getElementById('login').style.display = 'none';
+                document.getElementById('message-container').style.display = 'block';
+                document.getElementById('music').play();
+                typeMessage();
             } else {
-                setTimeout(() => {
-                    messageDiv.innerHTML += '<span class="highlight">TE AMO</span>';
-                    setTimeout(() => {
-                        finalMessage.style.display = "block";
-                        setTimeout(() => {
-                            window.location.href = "index.html";
-                        }, 3000);
-                    }, 2000);
-                }, 500);
+                document.getElementById('error-message').innerText = "Fecha incorrecta. Intenta de nuevo.";
             }
         }
 
-        typeWriter();
+        function typeMessage() {
+            let text = "Hola...\n\n" +
+                       "Disculpa por ser tan discreto al demostrar mis emociones\n\n" +
+                       "soy diferente a los demás,no te doy rosas, chocolates, regalitos, y tampoco atención linda y oportuna\n\n" +
+                       "sí, lo sé, dirás que he hecho muchas cosas para que te alejes de mí\n\n" +
+                       "pero eso no quita el hecho de que hago otras más efímeras, abstractas, como esto que estas viendo ahora mismo.\n\n" +
+                       "Quizás así es mi lenguaje de amor, no lo se, a veces quiero saber que significa la palabra AMOR\n\n" +
+                       "soy una persona muy compleja, de emociones e incapaz de entender\n\n" +
+                       "estamos en un momento difícil, no sé cómo acabaremos\n\n" +
+                       "sé que deseas que las cosas se pongan bien, que te den atención, cuidado, cosas bonitas y conmigo no lo tienes.\n\n" +
+                       "Yo, encerrado en mis cosas, pareciera que no me imporatar pero si me importar y mucho.\n\n" +
+                       "No quiero lograr nada con esto, solo quiero reafirmar dos palabras...\n\n" +
+                       "<span class='highlight'>TE AMO</span>.\n\n" +
+                       "...\n\n" +
+                       "<span class='highlight'>Disculpa por la broma de mal gusto que te hice anoche.</span>";
+            
+            let i = 0;
+            function write() {
+                if (i < text.length) {
+                    document.getElementById('message').innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(write, 50);
+                } else {
+                    setTimeout(() => {
+                        document.getElementById('music').pause();
+                        document.getElementById('message-container').style.display = 'none';
+                        document.getElementById('login').style.display = 'block';
+                    }, 5000);
+                }
+            }
+            write();
+        }
     </script>
 </body>
 </html>
