@@ -1,20 +1,131 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi amor, Melissa</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Mi Enamorada Melissa</title>
+    <style>
+        /* Estilos básicos */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f8f8f8;
+        }
+
+        .container {
+            text-align: center;
+            padding: 50px;
+        }
+
+        #login-form {
+            display: block;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        input[type="date"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #ff4d4d;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .message {
+            font-size: 24px;
+            margin-top: 30px;
+            color: #ff4d4d;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        /* Animación de fade-in */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Animación de corazón */
+        @keyframes heartBeat {
+            0% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.2);
+            }
+            50% {
+                transform: scale(1);
+            }
+        }
+
+        .heart {
+            font-size: 60px;
+            color: red;
+            animation: heartBeat 1s infinite;
+        }
+
+    </style>
 </head>
-
 <body>
-    <div class="content">
-        <h1>Bienvenida, Melissa</h1>
-        <p>¡Feliz aniversario, mi amor! 🎉💖</p>
-        <p>10 de febrero, 2024, es un día especial que nunca olvidaré. Te amo mucho.</p>
-        <p>¡Eres la mujer de mis sueños!</p>
-    </div>
-</body>
+    <div class="container">
+        <!-- Login Form -->
+        <div id="login-form">
+            <h2>Bienvenido, Melissa</h2>
+            <p>Ingresa la fecha de nuestro aniversario</p>
+            <input type="date" id="anniversaryDate" />
+            <br><br>
+            <button onclick="checkDate()">Ingresar</button>
+        </div>
 
+        <!-- Mensaje bonito -->
+        <div id="message" class="hidden">
+            <h2 class="message">¡Feliz aniversario, Melissa! 💖</h2>
+            <p class="message">Te amo más de lo que las palabras pueden decir.</p>
+            <p class="message">Gracias por ser mi todo.</p>
+            <div class="heart">❤️</div>
+        </div>
+    </div>
+
+    <audio id="music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+    </audio>
+
+    <script>
+        // Verifica si la fecha es correcta
+        function checkDate() {
+            const inputDate = document.getElementById('anniversaryDate').value;
+            const correctDate = "2024-02-10";  // La fecha de tu aniversario
+
+            if (inputDate === correctDate) {
+                // Si la fecha es correcta, muestra el mensaje bonito
+                document.getElementById('login-form').classList.add('hidden');
+                document.getElementById('message').classList.remove('hidden');
+                document.getElementById('music').play();  // Reproduce música
+            } else {
+                alert("La fecha no es correcta. Intenta de nuevo.");
+            }
+        }
+    </script>
+</body>
 </html>
